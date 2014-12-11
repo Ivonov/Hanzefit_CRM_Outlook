@@ -15,8 +15,8 @@ namespace HanzeFitCRM
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            Klanten_overzicht klant = new Klanten_overzicht();
-            klant.ShowDialog();
+            //Klanten_overzicht klant = new Klanten_overzicht();
+            //klant.ShowDialog();
             //myUserControl1 = new MyUserControl();
             //myCustomTaskPane = this.CustomTaskPanes.Add(myUserControl1, "My Task Pane");
             //myCustomTaskPane.Visible = true;

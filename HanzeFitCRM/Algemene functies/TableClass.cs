@@ -28,6 +28,7 @@ namespace HanzeFitCRM
         public TableClass(System.Windows.Forms.DataGridView thisDataGrid) 
         { 
             this.thisDataGrid = thisDataGrid; 
+
         }
 
         /// <summary>
@@ -36,7 +37,6 @@ namespace HanzeFitCRM
         /// weg zetten van de gegevens
         /// </summary>
         /// <param name="tableType"></param>
-        /// <param name="thisDataGrid"></param>
         public void setTable(String tableType)
         {            
             switch (tableType) {
@@ -71,6 +71,8 @@ namespace HanzeFitCRM
                     getDataforDataGridView(query);
                     break;
             }
+            setCollumsDataGridView();
+            setDataForDataGridView();
         }
 
         /// <summary>
@@ -78,7 +80,6 @@ namespace HanzeFitCRM
         /// Deze kolom titels worden terug gestuurd naar de buttonclick van de desbetreffende overzicht knop.
         /// </summary>
         /// <param name="query">Is een string opgesteld als een MySQL commando</param>
-        /// <returns name="collumList">Dit is een lijst van alle kolom titels</returns>
         private void getColumnNames(String query)
         {
             columnList = new List<String>();
@@ -126,7 +127,6 @@ namespace HanzeFitCRM
         /// van de desbetreffende tabel.
         /// </summary>
         /// <param name="query">Dit is de query die word uitvoerd om de data te verschaffen</param>
-        /// <returns name ="DataforDataGridView"> dit is een list van alle data die nader word weergegeven in een DataGridView</returns>
         private void getDataforDataGridView(String query) {
             DataforDataGridView = new Hashtable();
             rowData = new List<String>();
@@ -148,10 +148,13 @@ namespace HanzeFitCRM
                     int counter = 0;
                     while (result.Read())
                     {
-                        for (int i = 0; i < columnList.Count; i++)
+                        for (int i = 0; i < columnList.Count; ++i)
                         {
-                            DataforDataGridView.Add(columnList[counter], result.GetString(i));
+                            rowData.Add(result.GetString(i));
+                            //DataforDataGridView.Add(counter, result.GetString(i));
                         }
+                        DataforDataGridView.Add(counter, rowData);
+                        rowData.Clear();
                         ++counter;
                     }
                 } 
@@ -165,15 +168,29 @@ namespace HanzeFitCRM
         /// <summary>
         /// Hier worden de gegevens in de desbetreffende DataGridView gezet 
         /// </summary>
-        /// <param name="thisDataGrid">De referencie naar de desbetreffende DataGridView.</param>
-        private void setCollumsDataGridView(System.Windows.Forms.DataGridView thisDataGrid)
+        private void setCollumsDataGridView()
         {
+            thisDataGrid.ColumnCount = columnList.Count();
+            for (int i = 0; i < columnList.Count(); ++i ) {
+                thisDataGrid.Columns[0].Name = columnList[i];
+            }
         }
 
         /// <summary>
         /// Hier worden alle data/regels toegevoegd aan de behoorde DataGridView
         /// </summary>
-        private void setDataForDataGridView() { 
+        private void setDataForDataGridView() {
+            foreach (System.Collections.DictionaryEntry row in DataforDataGridView)
+            {
+                thisDataGrid.Rows.Add(row.Value);
+
+                DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
+                thisDataGrid.Columns.Add(btn);
+                btn.HeaderText = "Click Data";
+                btn.Text = "Click Here";
+                btn.Name = "btn";
+                btn.UseColumnTextForButtonValue = true;
+            }
             
         }
     }
