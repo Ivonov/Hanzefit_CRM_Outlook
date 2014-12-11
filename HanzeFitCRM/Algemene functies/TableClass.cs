@@ -5,49 +5,68 @@ using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using MySql.Data.Types;
+using System.Collections;
 
 namespace HanzeFitCRM
 {
+    /// <summary>
+    /// Deze klasse is verantwoordelijk voor de functionaliteit van de overzichten.
+    /// Per overzicht die word aangemaakt word er een TableClass aangemaakt.
+    /// </summary>
     class TableClass {
+        private System.Windows.Forms.DataGridView thisDataGrid;
+        private List<String> columnList;
+        private Hashtable DataforDataGridView;
+        private List<String> rowData;
         private String query = null;
         private List<String> dataList = new List<String>();
 
-        /**
-         * Deze methode ontvangt een String die aangeeft welke overzicht
-         * moet worden weergegeven.
-         * De attributen van deze overzicht worden hier opgevraagt en doorgegeven,
-         * om nader deze in te voegen in een table.
-         */
-        public void setTable(String tableType, System.Windows.Forms.DataGridView thisDataGrid)
-        {
+        /// <summary>
+        /// Hier word het object aangemaakt en word de referencie van de desbetreffende DataGridView doorgegeven.
+        /// </summary>
+        /// <param name="thisDataGrid">De referencie naar de desbetreffende DataGridView</param>
+        public TableClass(System.Windows.Forms.DataGridView thisDataGrid) 
+        { 
+            this.thisDataGrid = thisDataGrid; 
+        }
+
+        /// <summary>
+        /// Aan de hand van de String word bekeken voor welk overzicht het tabel word opgesteld.
+        /// Nader worden andere methodes aangeroept, die verantwoordelijk zijn voor het oproepen en
+        /// weg zetten van de gegevens
+        /// </summary>
+        /// <param name="tableType"></param>
+        /// <param name="thisDataGrid"></param>
+        public void setTable(String tableType)
+        {            
             switch (tableType) {
                 case "Klant":
                     query = "DESCRIBE `Klanten overzicht`";
-                    getCollumNames(query);
+                    getColumnNames(query);
                     query = "SELECT * FROM `klanten overzicht`";
                     getDataforDataGridView(query);
                     break;
                 case "Dienst":
                     query = "DESCRIBE `Diensten`";
-                    getCollumNames(query);
+                    getColumnNames(query);
                     query = "SELECT * FROM `dienst overzicht`";
                     getDataforDataGridView(query);
                     break;
                 case "Gebruiker":
                     query = "DESCRIBE `Gebruiker`";
-                    getCollumNames(query);
+                    getColumnNames(query);
                     query = "SELECT * FROM `gebruiker overzicht`";
                     getDataforDataGridView(query);
                     break;
                 case "Statistiek":
                     query = "DESCRIBE `Statistieken`";
-                    getCollumNames(query);
+                    getColumnNames(query);
                     query = "SELECT * FROM Klanten overzicht";
                     getDataforDataGridView(query);
                     break;
                 case "Afspraak":
                     query = "DESCRIBE `Afspraken`";
-                    getCollumNames(query);
+                    getColumnNames(query);
                     query = "SELECT * FROM `afspraak overzicht`";
                     getDataforDataGridView(query);
                     break;
@@ -60,9 +79,9 @@ namespace HanzeFitCRM
         /// </summary>
         /// <param name="query">Is een string opgesteld als een MySQL commando</param>
         /// <returns name="collumList">Dit is een lijst van alle kolom titels</returns>
-        private List<String> getCollumNames(String query)
+        private void getColumnNames(String query)
         {
-            List<String> collumList = new List<String>();
+            columnList = new List<String>();
             if (query != null) {
                 MySqlConnection myConnection = new MySqlConnection("user id=root; Server=localhost; Persist Security info=true; database=outlook;");
                 MySqlDataReader result = null;
@@ -78,7 +97,7 @@ namespace HanzeFitCRM
 
                     while (result.Read())
                     {
-                        collumList.Add(result.GetString(0)); // Doet het, moet eerst wel in een String[] gegooit worden
+                        columnList.Add(result.GetString(0)); // Doet het, moet eerst wel in een String[] gegooit worden
                     }
 
                     /*
@@ -98,10 +117,8 @@ namespace HanzeFitCRM
                 }
                 finally {
                     myConnection.Close();
-                    fillTableCollumNames(result);
                 }
             }
-            return collumList;
         }
 
         /// <summary>
@@ -110,8 +127,9 @@ namespace HanzeFitCRM
         /// </summary>
         /// <param name="query">Dit is de query die word uitvoerd om de data te verschaffen</param>
         /// <returns name ="DataforDataGridView"> dit is een list van alle data die nader word weergegeven in een DataGridView</returns>
-        private List<String> getDataforDataGridView(String query, int columnCount) {
-            List<String> DataforDataGridView = new List<String>();
+        private void getDataforDataGridView(String query) {
+            DataforDataGridView = new Hashtable();
+            rowData = new List<String>();
 
             if (query != null)
             {
@@ -127,11 +145,14 @@ namespace HanzeFitCRM
 
                     result = myCommand.ExecuteReader();
 
+                    int counter = 0;
                     while (result.Read())
                     {
-                        for (int i = 0; i < columnCount; i++ ) {
-                            DataforDataGridView.Add(result.GetString(i));
+                        for (int i = 0; i < columnList.Count; i++)
+                        {
+                            DataforDataGridView.Add(columnList[counter], result.GetString(i));
                         }
+                        ++counter;
                     }
                 } 
                 catch (System.Data.SqlClient.SqlException sqlException)
@@ -139,33 +160,21 @@ namespace HanzeFitCRM
                     MessageBox.Show("Connection has faild due to: " + sqlException.Message);
                 }
             }
-            return DataforDataGridView;
         }
 
         /// <summary>
-        /// 
+        /// Hier worden de gegevens in de desbetreffende DataGridView gezet 
         /// </summary>
-        /// <param name="thisDataGrid"></param>
+        /// <param name="thisDataGrid">De referencie naar de desbetreffende DataGridView.</param>
         private void setCollumsDataGridView(System.Windows.Forms.DataGridView thisDataGrid)
         {
-            thisDataGrid.ColumnCount = 3;
-            thisDataGrid.Columns[0].Name = "Product ID";
-            thisDataGrid.Columns[1].Name = "Product Name";
-            thisDataGrid.Columns[2].Name = "Product Price";
         }
 
-
-        private void fillTableCollumNames(MySqlDataReader result) { 
-            if(result != null){
-                //MessageBox.Show("#--Result toString: " + result.GetValue(0).ToString()); //TODO moet nog vervangen worden door een table object ect
-            }
-        }
-        private void fillTableInformation(String query)
-        {
-            if (query != null)
-            {
-                //TODO
-            }
+        /// <summary>
+        /// Hier worden alle data/regels toegevoegd aan de behoorde DataGridView
+        /// </summary>
+        private void setDataForDataGridView() { 
+            
         }
     }
 }

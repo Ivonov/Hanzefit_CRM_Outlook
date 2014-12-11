@@ -21,9 +21,9 @@ namespace HanzeFitCRM
         /// <param name="e"></param> standaard
         private void buttonOverzichtKlanten_Click(object sender, RibbonControlEventArgs e)
         {
-            TableClass table = new TableClass();
             Klanten_overzicht klantenOverzicht = new Klanten_overzicht();
-            table.setTable("Klant", klantenOverzicht.getDataGridView());
+            TableClass table = new TableClass(klantenOverzicht.getDataGridView());
+            table.setTable("Klant");
         }
     }
 }
