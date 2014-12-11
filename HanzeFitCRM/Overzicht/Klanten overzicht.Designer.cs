@@ -129,5 +129,10 @@
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.GroupBox groupBox;
         private System.Windows.Forms.TextBox textBox1;
+
+        public System.Windows.Forms.DataGridView getDataGridView()
+        {
+            return dataGridViewKlanten;
+        }
     }
 }

@@ -29,3 +29,13 @@ G:\HanzeFitCRM\HanzeFitCRM\obj\Debug\HanzeFitCRM.Statistieken_overzicht.resource
 G:\HanzeFitCRM\HanzeFitCRM\obj\Debug\HanzeFitCRM.csproj.GenerateResource.Cache
 G:\HanzeFitCRM\HanzeFitCRM\obj\Debug\HanzeFitCRM.dll
 G:\HanzeFitCRM\HanzeFitCRM\obj\Debug\HanzeFitCRM.pdb
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\HanzeFitCRM.dll
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\HanzeFitCRM.pdb
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\HanzeFitCRM.dll.manifest
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\HanzeFitCRM.vsto
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.dll
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.dll
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\MySql.Data.dll
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\Microsoft.Office.Tools.Common.v4.0.Utilities.xml
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\Microsoft.Office.Tools.Outlook.v4.0.Utilities.xml
+G:\HanzeFitCRM\HanzeFitCRM\bin\Debug\mysql.web.dll

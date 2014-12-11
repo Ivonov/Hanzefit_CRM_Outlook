@@ -12,10 +12,18 @@ namespace HanzeFitCRM
         {
         }
 
+        /// <summary>
+        /// Deze class maakt een een table class en een klantenoverzicht class aan om de klanten gegevens weer te geven
+        /// In de table class kunnen gegevens worden opgehaald uit de database en worden aangevult in de DataGridView
+        /// De klantenOverzicht class bied een grafishe omgeving om deze gegevens weer te geven.
+        /// </summary>
+        /// <param name="sender"></param> standaard
+        /// <param name="e"></param> standaard
         private void buttonOverzichtKlanten_Click(object sender, RibbonControlEventArgs e)
         {
             TableClass table = new TableClass();
-            table.setTable("Klant");
+            Klanten_overzicht klantenOverzicht = new Klanten_overzicht();
+            table.setTable("Klant", klantenOverzicht.getDataGridView());
         }
     }
 }
