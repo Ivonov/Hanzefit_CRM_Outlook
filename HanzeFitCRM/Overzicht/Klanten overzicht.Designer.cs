@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.groupBoxZoeken = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBoxKlantenOverzicht = new System.Windows.Forms.GroupBox();
             this.dataGridViewKlanten = new System.Windows.Forms.DataGridView();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.groupBox = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBoxZoeken.SuspendLayout();
             this.groupBoxKlantenOverzicht.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewKlanten)).BeginInit();
@@ -52,8 +52,18 @@
             this.groupBoxZoeken.TabStop = false;
             this.groupBoxZoeken.Text = "Zoeken:";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(7, 20);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(107, 20);
+            this.textBox1.TabIndex = 0;
+            // 
             // groupBoxKlantenOverzicht
             // 
+            this.groupBoxKlantenOverzicht.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxKlantenOverzicht.Controls.Add(this.dataGridViewKlanten);
             this.groupBoxKlantenOverzicht.Location = new System.Drawing.Point(140, 13);
             this.groupBoxKlantenOverzicht.Name = "groupBoxKlantenOverzicht";
@@ -64,8 +74,13 @@
             // 
             // dataGridViewKlanten
             // 
+            this.dataGridViewKlanten.AllowUserToAddRows = false;
+            this.dataGridViewKlanten.AllowUserToDeleteRows = false;
+            this.dataGridViewKlanten.AllowUserToOrderColumns = true;
+            this.dataGridViewKlanten.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewKlanten.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewKlanten.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridViewKlanten.Location = new System.Drawing.Point(3, 16);
             this.dataGridViewKlanten.Name = "dataGridViewKlanten";
             this.dataGridViewKlanten.Size = new System.Drawing.Size(702, 374);
@@ -94,13 +109,6 @@
             this.groupBox.TabIndex = 1;
             this.groupBox.TabStop = false;
             this.groupBox.Text = "Functies:";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(7, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(107, 20);
-            this.textBox1.TabIndex = 0;
             // 
             // Klanten_overzicht
             // 

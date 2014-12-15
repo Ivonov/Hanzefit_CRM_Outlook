@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using MySql.Data.Types;
 using System.Collections;
+using System.Drawing;
 
 namespace HanzeFitCRM
 {
@@ -16,7 +17,7 @@ namespace HanzeFitCRM
     class TableClass {
         private System.Windows.Forms.DataGridView thisDataGrid;
         private List<String> columnList;
-        private Hashtable DataforDataGridView;
+        private Dictionary<int, List<String>> DataforDataGridView;
         private List<String> rowData;
         private String query = null;
         private List<String> dataList = new List<String>();
@@ -28,7 +29,6 @@ namespace HanzeFitCRM
         public TableClass(System.Windows.Forms.DataGridView thisDataGrid) 
         { 
             this.thisDataGrid = thisDataGrid; 
-
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace HanzeFitCRM
                 {
                     myConnection.Open();
 
-                    MessageBox.Show(query);
+                    MessageBox.Show(query); // ter controle -------------------------------------------------------------------------------------------------!
 
                     MySqlCommand myCommand = new MySqlCommand(query, myConnection);
 
@@ -102,7 +102,7 @@ namespace HanzeFitCRM
                     }
 
                     /*
-                    StringBuilder builder = new StringBuilder(); // dit is alleen voor het testen aanwezig
+                    StringBuilder builder = new StringBuilder(); // ter controle ----------------------------------------------------------------------------!
                     foreach (String lol in collumList)
                     {
                         // Append each int to the StringBuilder overload.
@@ -128,7 +128,7 @@ namespace HanzeFitCRM
         /// </summary>
         /// <param name="query">Dit is de query die word uitvoerd om de data te verschaffen</param>
         private void getDataforDataGridView(String query) {
-            DataforDataGridView = new Hashtable();
+            DataforDataGridView = new Dictionary<int, List<String>>();
             rowData = new List<String>();
 
             if (query != null)
@@ -139,7 +139,7 @@ namespace HanzeFitCRM
                 {
                     myConnection.Open();
 
-                    MessageBox.Show(query);
+                    MessageBox.Show(query); // ter controle -------------------------------------------------------------------------------------------------!
 
                     MySqlCommand myCommand = new MySqlCommand(query, myConnection);
 
@@ -150,17 +150,21 @@ namespace HanzeFitCRM
                     {
                         for (int i = 0; i < columnList.Count; ++i)
                         {
+                            if (counter != 0 && i > 0) { result.Read(); }
                             rowData.Add(result.GetString(i));
                             //DataforDataGridView.Add(counter, result.GetString(i));
                         }
-                        DataforDataGridView.Add(counter, rowData);
+                        DataforDataGridView.Add(counter, rowData.ToList<String>());
                         rowData.Clear();
                         ++counter;
                     }
-                } 
+                }
                 catch (System.Data.SqlClient.SqlException sqlException)
                 {
                     MessageBox.Show("Connection has faild due to: " + sqlException.Message);
+                }
+                finally {
+                    myConnection.Close();
                 }
             }
         }
@@ -172,7 +176,7 @@ namespace HanzeFitCRM
         {
             thisDataGrid.ColumnCount = columnList.Count();
             for (int i = 0; i < columnList.Count(); ++i ) {
-                thisDataGrid.Columns[0].Name = columnList[i];
+                thisDataGrid.Columns[i].Name = columnList[i].ToString();
             }
         }
 
@@ -180,18 +184,71 @@ namespace HanzeFitCRM
         /// Hier worden alle data/regels toegevoegd aan de behoorde DataGridView
         /// </summary>
         private void setDataForDataGridView() {
-            foreach (System.Collections.DictionaryEntry row in DataforDataGridView)
+            String buttonname;
+            DataGridViewLinkColumn btn = null; 
+            for (int i = 0; i < DataforDataGridView.Count; ++i)
             {
-                thisDataGrid.Rows.Add(row.Value);
+                thisDataGrid.Rows.Add(DataforDataGridView[i].ToArray());
 
-                DataGridViewButtonColumn btn = new DataGridViewButtonColumn();
-                thisDataGrid.Columns.Add(btn);
-                btn.HeaderText = "Click Data";
-                btn.Text = "Click Here";
-                btn.Name = "btn";
-                btn.UseColumnTextForButtonValue = true;
+                buttonname = DataforDataGridView[i][0];
+                MessageBox.Show(buttonname);
+
+                if (btn == null) 
+                {
+                    btn = new DataGridViewLinkColumn();
+                    thisDataGrid.Columns.Add(btn);
+                    btn.HeaderText = ""; // Dit is de title boven in de column
+                }
+                btn.Text = buttonname; // Dit is de lable van de button
+                btn.Name = buttonname; // Dit is de referencie naar de button
+                btn.LinkColor = Color.Blue;
+                btn.LinkBehavior = LinkBehavior.SystemDefault;
+                btn.UseColumnTextForLinkValue = true;
+                
             }
-            
+        }
+
+        /// <summary>
+        /// Wanneer de hypelink word geklikt word er gecontroleerd welke colomn word geklikt.
+        /// In dit geval word er op twee columns gecontroleerd, waaronder edit en delete, 
+        /// welke voor zich spreken wat ze doen
+        /// </summary>
+        /// <param name="sender">Is het object die de handler aanspreekt</param>
+        /// <param name="e">Is het DataGridView onhoud, waaronder de row en column click</param>
+        private void myDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == thisDataGrid.ColumnCount-1) // Dit zou de laatste column van de overzicht (delete)
+            {
+                String test = thisDataGrid.Rows[e.RowIndex].Cells[0].Value.ToString();
+            }
+            else if (e.ColumnIndex == thisDataGrid.ColumnCount - 2) // Dit zou de een na laatste column van de overzicht (wijzigen)
+            {
+
+            }
+            else 
+            {
+                MessageBox.Show("#--Dit klopt niet helemaal xD"); // Ter controle ---------------------------------------------------------------------!
+            }
+        }
+
+        /// <summary>
+        /// Hier word de row uit de database verwijderd, de row word gezocht via de vierlettercode.
+        /// </summary>
+        /// <param name="vierLetterCode">Dit is de primaire key die word gebruikt om de juiste regel te vinden en nader te verwijderen</param>
+        private void deleteRowInDatabase(String vierLetterCode) 
+        { 
+            //Hier komt code
+            MessageBox.Show("#--> De row van " + vierLetterCode + " is geslecteerd, om verwijderd te worden." );
+        }
+
+        /// <summary>
+        /// Hier word de regel die geselecteerd is gewijzigd, door eerst een ander form aan te maken en daar de wijziging mogelijkheden te bieden.
+        /// </summary>
+        /// <param name="vierLetterCode">Dit is de primaire key die word gebruikt om de juiste regel te vinden en nader te wijzigen</param>
+        private void editRowInDatabase(String vierLetterCode) 
+        { 
+            //Hier komt code
+            MessageBox.Show("#--> De row van " + vierLetterCode + " is geslecteerd, om gewijzigd te worden.");
         }
     }
 }

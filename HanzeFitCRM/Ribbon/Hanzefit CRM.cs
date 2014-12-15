@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Office.Tools.Ribbon;
+using System.Windows.Forms;
 
 namespace HanzeFitCRM
 {
@@ -23,7 +24,9 @@ namespace HanzeFitCRM
         {
             Klanten_overzicht klantenOverzicht = new Klanten_overzicht();
             TableClass table = new TableClass(klantenOverzicht.getDataGridView());
+            MessageBox.Show(klantenOverzicht.getDataGridView().ToString());
             table.setTable("Klant");
+            klantenOverzicht.ShowDialog();
         }
     }
 }
