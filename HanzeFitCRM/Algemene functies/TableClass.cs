@@ -204,6 +204,8 @@ namespace HanzeFitCRM
                 btn.LinkColor = Color.Blue;
                 btn.LinkBehavior = LinkBehavior.SystemDefault;
                 btn.UseColumnTextForLinkValue = true;
+                btn.LinkBehavior += new EventHandler(myDataGridView_CellContentClick); // ???????????????????????????????????????????????????????????????????????????????
+ 
                 
             }
         }
@@ -219,15 +221,15 @@ namespace HanzeFitCRM
         {
             if (e.ColumnIndex == thisDataGrid.ColumnCount-1) // Dit zou de laatste column van de overzicht (delete)
             {
-                String test = thisDataGrid.Rows[e.RowIndex].Cells[0].Value.ToString();
+                deleteRowInDatabase(thisDataGrid.Rows[e.RowIndex].Cells[0].Value.ToString());
             }
             else if (e.ColumnIndex == thisDataGrid.ColumnCount - 2) // Dit zou de een na laatste column van de overzicht (wijzigen)
             {
-
+                editRowInDatabase(thisDataGrid.Rows[e.RowIndex].Cells[0].Value.ToString());
             }
             else 
             {
-                MessageBox.Show("#--Dit klopt niet helemaal xD"); // Ter controle ---------------------------------------------------------------------!
+                MessageBox.Show("#--Dit klopt niet helemaal met het klikken xD"); // Ter controle -----------------------------------------------------------!
             }
         }
 
@@ -238,7 +240,7 @@ namespace HanzeFitCRM
         private void deleteRowInDatabase(String vierLetterCode) 
         { 
             //Hier komt code
-            MessageBox.Show("#--> De row van " + vierLetterCode + " is geslecteerd, om verwijderd te worden." );
+            MessageBox.Show("#--> De row van " + vierLetterCode + " is geslecteerd, om verwijderd te worden." ); //Ter controle -----------------------------!
         }
 
         /// <summary>
@@ -248,7 +250,7 @@ namespace HanzeFitCRM
         private void editRowInDatabase(String vierLetterCode) 
         { 
             //Hier komt code
-            MessageBox.Show("#--> De row van " + vierLetterCode + " is geslecteerd, om gewijzigd te worden.");
+            MessageBox.Show("#--> De row van " + vierLetterCode + " is geslecteerd, om gewijzigd te worden."); //Ter controle -------------------------------!
         }
     }
 }
