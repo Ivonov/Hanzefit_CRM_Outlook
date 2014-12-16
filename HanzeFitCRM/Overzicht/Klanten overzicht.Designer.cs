@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBoxZoeken = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxKlantenOverzicht = new System.Windows.Forms.TextBox();
             this.groupBoxKlantenOverzicht = new System.Windows.Forms.GroupBox();
             this.dataGridViewKlanten = new System.Windows.Forms.DataGridView();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
@@ -44,7 +44,7 @@
             // 
             this.groupBoxZoeken.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.groupBoxZoeken.Controls.Add(this.textBox1);
+            this.groupBoxZoeken.Controls.Add(this.textBoxKlantenOverzicht);
             this.groupBoxZoeken.Location = new System.Drawing.Point(13, 13);
             this.groupBoxZoeken.Name = "groupBoxZoeken";
             this.groupBoxZoeken.Size = new System.Drawing.Size(120, 55);
@@ -52,12 +52,13 @@
             this.groupBoxZoeken.TabStop = false;
             this.groupBoxZoeken.Text = "Zoeken:";
             // 
-            // textBox1
+            // textBoxKlantenOverzicht
             // 
-            this.textBox1.Location = new System.Drawing.Point(7, 20);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(107, 20);
-            this.textBox1.TabIndex = 0;
+            this.textBoxKlantenOverzicht.Location = new System.Drawing.Point(7, 20);
+            this.textBoxKlantenOverzicht.Name = "textBoxKlantenOverzicht";
+            this.textBoxKlantenOverzicht.Size = new System.Drawing.Size(107, 20);
+            this.textBoxKlantenOverzicht.TabIndex = 0;
+            this.textBoxKlantenOverzicht.Enter += new System.EventHandler(AlgemeneFunctiesObject.myTextBoxOverzicht_Enter);
             // 
             // groupBoxKlantenOverzicht
             // 
@@ -136,7 +137,7 @@
         private System.Windows.Forms.DataGridView dataGridViewKlanten;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.GroupBox groupBox;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxKlantenOverzicht;
 
         public System.Windows.Forms.DataGridView getDataGridView()
         {

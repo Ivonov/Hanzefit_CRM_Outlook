@@ -24,6 +24,7 @@ namespace HanzeFitCRM
         {
             Klanten_overzicht klantenOverzicht = new Klanten_overzicht();
             TableClass table = new TableClass(klantenOverzicht.getDataGridView());
+            //klantenOverzicht.SetTableClass();
             MessageBox.Show(klantenOverzicht.getDataGridView().ToString());
             table.setTable("Klant");
             klantenOverzicht.ShowDialog();

@@ -11,8 +11,11 @@ namespace HanzeFitCRM
 {
     public partial class Klanten_overzicht : Form
     {
-        public Klanten_overzicht()
+        TableClass AlgemeneFunctiesObject;
+
+        public Klanten_overzicht(TableClass AlgemeneFunctiesObject)
         {
+            this.AlgemeneFunctiesObject = AlgemeneFunctiesObject;
             InitializeComponent();
         }
     }
