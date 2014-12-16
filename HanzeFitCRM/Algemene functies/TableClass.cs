@@ -185,7 +185,7 @@ namespace HanzeFitCRM
         /// </summary>
         private void setDataForDataGridView() {
             String buttonname;
-            DataGridViewLinkColumn btn = null; 
+            DataGridViewButtonColumn btn = null; 
             for (int i = 0; i < DataforDataGridView.Count; ++i)
             {
                 thisDataGrid.Rows.Add(DataforDataGridView[i].ToArray());
@@ -195,18 +195,14 @@ namespace HanzeFitCRM
 
                 if (btn == null) 
                 {
-                    btn = new DataGridViewLinkColumn();
+                    btn = new DataGridViewButtonColumn();
                     thisDataGrid.Columns.Add(btn);
-                    btn.HeaderText = ""; // Dit is de title boven in de column
+                    thisDataGrid.CellClick += new DataGridViewCellEventHandler(myDataGridView_CellContentClick);
+                    btn.HeaderText = "Wijzigen"; // Dit is de title boven in de column
                 }
-                btn.Text = buttonname; // Dit is de lable van de button
+                btn.Text = "Wijzigen"; // Dit is de lable van de button
                 btn.Name = buttonname; // Dit is de referencie naar de button
-                btn.LinkColor = Color.Blue;
-                btn.LinkBehavior = LinkBehavior.SystemDefault;
-                btn.UseColumnTextForLinkValue = true;
-                btn.LinkBehavior += new EventHandler(myDataGridView_CellContentClick); // ???????????????????????????????????????????????????????????????????????????????
- 
-                
+                btn.UseColumnTextForButtonValue = true;
             }
         }
 
